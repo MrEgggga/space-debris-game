@@ -2,6 +2,9 @@
 
 [ext_resource type="Script" path="res://debris.gd" id="1_mmhkw"]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_ovhqo"]
+radius = 15.0
+
 [sub_resource type="Gradient" id="Gradient_6y364"]
 offsets = PackedFloat32Array(0, 0.20398, 0.40199, 0.564179, 0.704478, 0.856716, 1)
 colors = PackedColorArray(1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1)
@@ -16,30 +19,30 @@ height = 30
 color_ramp = SubResource("Gradient_6y364")
 noise = SubResource("FastNoiseLite_sqw48")
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ovhqo"]
-radius = 15.0
-
 [node name="debris" type="RigidBody2D"]
+mass = 20.0
 gravity_scale = 0.0
 contact_monitor = true
 max_contacts_reported = 16
 script = ExtResource("1_mmhkw")
 
-[node name="texture_rect" type="TextureRect" parent="."]
+[node name="collision_shape_2d" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ovhqo")
+
+[node name="node_2d" type="Node2D" parent="."]
+
+[node name="texture_rect" type="TextureRect" parent="node_2d"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -10.0
-offset_top = -10.0
-offset_right = 10.0
-offset_bottom = 10.0
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 15.0
+offset_bottom = 15.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("NoiseTexture2D_ajgqr")
-
-[node name="collision_shape_2d" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_ovhqo")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

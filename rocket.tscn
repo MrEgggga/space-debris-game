@@ -13,8 +13,12 @@ size = Vector2(38, 20)
 [node name="rocket" type="RigidBody2D"]
 mass = 400.0
 gravity_scale = 0.0
+center_of_mass_mode = 1
+inertia = 300000.0
+contact_monitor = true
+max_contacts_reported = 16
 script = ExtResource("1_0osl2")
-thrust_force = Vector2(0, -50000)
+thrust_force = Vector2(0, -80000)
 
 [node name="texture_rect" type="TextureRect" parent="."]
 anchors_preset = 8
@@ -34,10 +38,10 @@ texture = ExtResource("1_m7krc")
 shape = SubResource("CapsuleShape2D_0vbh5")
 
 [node name="booster_l" type="Node2D" parent="."]
-position = Vector2(-11, 29)
+position = Vector2(-19, 36)
 
 [node name="booster_r" type="Node2D" parent="."]
-position = Vector2(11, 29)
+position = Vector2(19, 36)
 
 [node name="camera_2d" type="Camera2D" parent="."]
 zoom = Vector2(0.5, 0.5)
@@ -45,3 +49,41 @@ zoom = Vector2(0.5, 0.5)
 [node name="collision_shape_2d2" type="CollisionShape2D" parent="."]
 position = Vector2(0, 26)
 shape = SubResource("RectangleShape2D_sxthh")
+
+[node name="color_rect" type="ColorRect" parent="."]
+offset_right = 10.0
+offset_bottom = 10.0
+
+[node name="canvas_layer" type="CanvasLayer" parent="."]
+
+[node name="bg" type="ColorRect" parent="canvas_layer"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -24.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0.686275, 0.666667, 0.541176, 0.454902)
+
+[node name="fg" type="ColorRect" parent="canvas_layer"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -24.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(1, 0.324797, 0.266349, 1)
+
+[node name="label" type="Label" parent="canvas_layer"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+offset_right = 40.0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "0 debris removed !"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

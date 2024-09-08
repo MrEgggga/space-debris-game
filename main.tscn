@@ -89,10 +89,10 @@ offset_bottom = -1321.0
 texture = SubResource("NoiseTexture2D_wcdyu")
 
 [node name="spawn_debris" type="Node2D" parent="."]
-position = Vector2(-504, -3349)
+position = Vector2(0, -5000)
 script = ExtResource("4_vkhjx")
-bounds = Rect2(-3000, -1000, 6000, 2000)
-debris_per_10000_square_pixels = 0.1
+bounds = Rect2(-16384, -2000, 32768, 4000)
+debris_per_10000_square_pixels = 0.03
 debris_scene = ExtResource("3_fjb02")
 
 [node name="debris" parent="spawn_debris" instance=ExtResource("3_fjb02")]

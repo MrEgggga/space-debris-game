@@ -16,3 +16,8 @@ mono_crash.*.json
 
 # macos
 .DS_Store
+
+# Local Netlify folder
+.netlify
+
+build/*
