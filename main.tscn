@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://cxcvd636mg2u"]
+[gd_scene load_steps=16 format=3 uid="uid://cxcvd636mg2u"]
 
 [ext_resource type="PackedScene" uid="uid://dd0gle0ujy414" path="res://rocket.tscn" id="1_7e8on"]
 [ext_resource type="Texture2D" uid="uid://qbkse4pjxlxn" path="res://earth_surface.png" id="2_ndneq"]
 [ext_resource type="PackedScene" uid="uid://dftbtp2wun6a7" path="res://debris.tscn" id="3_fjb02"]
 [ext_resource type="Shader" path="res://clouds.gdshader" id="4_3gcr6"]
+[ext_resource type="Script" path="res://spawn_debris.gd" id="4_vkhjx"]
 
 [sub_resource type="Gradient" id="Gradient_0ltl4"]
 colors = PackedColorArray(0, 0, 0, 0, 0.573619, 0.823874, 1, 1)
@@ -65,9 +66,6 @@ shape = SubResource("RectangleShape2D_ebxpi")
 [node name="rocket" parent="." instance=ExtResource("1_7e8on")]
 position = Vector2(0, -40)
 
-[node name="debris" parent="." instance=ExtResource("3_fjb02")]
-position = Vector2(-402, -3161)
-
 [node name="parallax_background" type="ParallaxBackground" parent="."]
 
 [node name="parallax_layer" type="ParallaxLayer" parent="parallax_background"]
@@ -89,3 +87,13 @@ offset_top = -34089.0
 offset_right = 32844.0
 offset_bottom = -1321.0
 texture = SubResource("NoiseTexture2D_wcdyu")
+
+[node name="spawn_debris" type="Node2D" parent="."]
+position = Vector2(-504, -3349)
+script = ExtResource("4_vkhjx")
+bounds = Rect2(-3000, -1000, 6000, 2000)
+debris_per_10000_square_pixels = 0.1
+debris_scene = ExtResource("3_fjb02")
+
+[node name="debris" parent="spawn_debris" instance=ExtResource("3_fjb02")]
+position = Vector2(17, -31)

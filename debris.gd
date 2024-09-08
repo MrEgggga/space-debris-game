@@ -3,7 +3,9 @@ class_name Debris
 
 
 func _ready() -> void:
-	linear_velocity.x = Gravitation.get_orbit_velocity(-global_position.y) / 50
+	linear_velocity.x = Gravitation.get_orbit_velocity(-global_position.y) / 5
+	if randf() < 0.5:
+		linear_velocity.x *= -1
 	gravitation_scale = 0
 
 
