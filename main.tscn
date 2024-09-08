@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://cxcvd636mg2u"]
+
+[ext_resource type="PackedScene" uid="uid://dd0gle0ujy414" path="res://rigid_body_2d.tscn" id="1_7e8on"]
+[ext_resource type="Texture2D" uid="uid://qbkse4pjxlxn" path="res://earth_surface.png" id="2_ndneq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ebxpi"]
+size = Vector2(1633, 522)
+
+[node name="main" type="Node2D"]
+
+[node name="rigid_body_2d" parent="." instance=ExtResource("1_7e8on")]
+position = Vector2(593, 602)
+
+[node name="static_body_2d" type="StaticBody2D" parent="."]
+
+[node name="collision_shape_2d" type="CollisionShape2D" parent="static_body_2d"]
+position = Vector2(584.5, 906)
+shape = SubResource("RectangleShape2D_ebxpi")
+
+[node name="texture_rect" type="TextureRect" parent="."]
+offset_left = -230.0
+offset_top = 645.0
+offset_right = 1395.0
+offset_bottom = 1170.0
+texture = ExtResource("2_ndneq")
+
+[node name="rigid_body_2d2" type="RigidBody2D" parent="."]
