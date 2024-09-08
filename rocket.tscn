@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dd0gle0ujy414"]
 
-[ext_resource type="Script" path="res://rigid_body_2d.gd" id="1_0osl2"]
+[ext_resource type="Script" path="res://rocket.gd" id="1_0osl2"]
 [ext_resource type="Texture2D" uid="uid://dn15fkroh53w1" path="res://rocket_body.png" id="1_m7krc"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0vbh5"]
@@ -10,9 +10,11 @@ height = 72.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sxthh"]
 size = Vector2(38, 20)
 
-[node name="rigid_body_2d" type="RigidBody2D"]
+[node name="rocket" type="RigidBody2D"]
 mass = 400.0
+gravity_scale = 0.0
 script = ExtResource("1_0osl2")
+thrust_force = Vector2(0, -50000)
 
 [node name="texture_rect" type="TextureRect" parent="."]
 anchors_preset = 8
@@ -38,6 +40,7 @@ position = Vector2(-11, 29)
 position = Vector2(11, 29)
 
 [node name="camera_2d" type="Camera2D" parent="."]
+zoom = Vector2(0.5, 0.5)
 
 [node name="collision_shape_2d2" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 26)
