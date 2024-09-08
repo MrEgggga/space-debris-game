@@ -1,27 +1,91 @@
-[gd_scene load_steps=4 format=3 uid="uid://cxcvd636mg2u"]
+[gd_scene load_steps=15 format=3 uid="uid://cxcvd636mg2u"]
 
-[ext_resource type="PackedScene" uid="uid://dd0gle0ujy414" path="res://rigid_body_2d.tscn" id="1_7e8on"]
+[ext_resource type="PackedScene" uid="uid://dd0gle0ujy414" path="res://rocket.tscn" id="1_7e8on"]
 [ext_resource type="Texture2D" uid="uid://qbkse4pjxlxn" path="res://earth_surface.png" id="2_ndneq"]
+[ext_resource type="PackedScene" uid="uid://dftbtp2wun6a7" path="res://debris.tscn" id="3_fjb02"]
+[ext_resource type="Shader" path="res://clouds.gdshader" id="4_3gcr6"]
+
+[sub_resource type="Gradient" id="Gradient_0ltl4"]
+colors = PackedColorArray(0, 0, 0, 0, 0.573619, 0.823874, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_80e8l"]
+gradient = SubResource("Gradient_0ltl4")
+fill_to = Vector2(0, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ebxpi"]
-size = Vector2(1633, 522)
+size = Vector2(100000, 1000)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tklgn"]
+shader = ExtResource("4_3gcr6")
+
+[sub_resource type="Gradient" id="Gradient_puyl8"]
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_uc1oq"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_c5yhl"]
+normalize = false
+color_ramp = SubResource("Gradient_puyl8")
+noise = SubResource("FastNoiseLite_uc1oq")
+
+[sub_resource type="Gradient" id="Gradient_1yqsk"]
+offsets = PackedFloat32Array(0, 0.869652, 0.924378)
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_k10ld"]
+noise_type = 5
+frequency = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_wcdyu"]
+width = 2048
+height = 2048
+color_ramp = SubResource("Gradient_1yqsk")
+noise = SubResource("FastNoiseLite_k10ld")
 
 [node name="main" type="Node2D"]
 
-[node name="rigid_body_2d" parent="." instance=ExtResource("1_7e8on")]
-position = Vector2(593, 602)
+[node name="atmosphere" type="TextureRect" parent="."]
+offset_left = -50000.0
+offset_top = -3000.0
+offset_right = 50000.0
+texture = SubResource("GradientTexture2D_80e8l")
 
-[node name="static_body_2d" type="StaticBody2D" parent="."]
+[node name="earth" type="StaticBody2D" parent="."]
 
-[node name="collision_shape_2d" type="CollisionShape2D" parent="static_body_2d"]
-position = Vector2(584.5, 906)
-shape = SubResource("RectangleShape2D_ebxpi")
-
-[node name="texture_rect" type="TextureRect" parent="."]
-offset_left = -230.0
-offset_top = 645.0
-offset_right = 1395.0
-offset_bottom = 1170.0
+[node name="earth_tex" type="TextureRect" parent="earth"]
+offset_left = -50000.0
+offset_right = 50000.0
+offset_bottom = 1000.0
 texture = ExtResource("2_ndneq")
 
-[node name="rigid_body_2d2" type="RigidBody2D" parent="."]
+[node name="collision_shape_2d" type="CollisionShape2D" parent="earth"]
+position = Vector2(0, 500)
+shape = SubResource("RectangleShape2D_ebxpi")
+
+[node name="rocket" parent="." instance=ExtResource("1_7e8on")]
+position = Vector2(0, -40)
+
+[node name="debris" parent="." instance=ExtResource("3_fjb02")]
+position = Vector2(-402, -3161)
+
+[node name="parallax_background" type="ParallaxBackground" parent="."]
+
+[node name="parallax_layer" type="ParallaxLayer" parent="parallax_background"]
+position = Vector2(-54, -424)
+motion_offset = Vector2(16384, 0)
+motion_mirroring = Vector2(32768, 0)
+
+[node name="texture_rect" type="TextureRect" parent="parallax_background/parallax_layer"]
+material = SubResource("ShaderMaterial_tklgn")
+offset_left = 34.0
+offset_top = -2205.0
+offset_right = 32802.0
+offset_bottom = 1891.0
+texture = SubResource("NoiseTexture2D_c5yhl")
+
+[node name="texture_rect2" type="TextureRect" parent="parallax_background/parallax_layer"]
+offset_left = 76.0
+offset_top = -34089.0
+offset_right = 32844.0
+offset_bottom = -1321.0
+texture = SubResource("NoiseTexture2D_wcdyu")
